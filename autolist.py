@@ -20,7 +20,7 @@ url = 'https://www.autolist.com/listings#page=1'\
       '&radius={}'\
       '&trim[]={}'\
       '&transmission[]={}'\
-      .format('Cary', 'NC', 'Mazda', 'MX-5+Miata', '2019', '2019', 'Any', 'Grand+Touring', 'manual')
+      .format('Cary', 'NC', 'Mazda', 'MX-5+Miata', '2019', '2019', 'Any', 'Club', 'manual')
 
 driver.get(url)
 vehicles = driver.find_element_by_id('vehicle-list')
@@ -42,14 +42,13 @@ for car in data:
     link = car['link']
     driver.get(link)
     print(link)
-    time.sleep(1)
+    time.sleep(.5)
     driver.find_element_by_xpath("//a[@data-action='extra details']").click()
     time.sleep(1)
     color = vin = None
     features = driver.find_elements_by_class_name("vehicle-feature")
 
     for feature in features:
-        print(feature.find_element_by_class_name("feature-label").text)
         if vin is None and feature.find_element_by_class_name("feature-label").text == "VIN":
             vin = feature.find_element_by_class_name("feature-value").text
         elif color is None and feature.find_element_by_class_name("feature-label").text == "Exterior Color":
